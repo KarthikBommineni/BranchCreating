@@ -1,0 +1,92 @@
+public class DatabaseExample(){
+   public static void InsertExample1(){
+     Contact con = new Contact();
+	 con.FirstName = 'Karthik';
+	 con.LastName = 'Bommineni';
+	 con.Phone = '95054283814';
+	 con.BirthDate = Date.Instance(1995,06,12);
+	 con.Fax = '4567891234';
+	 con.Department = 'Development';
+    insert con;
+   if(con.Id!=null){
+   system.debug("Contact is Created");
+    }
+  }
+  public static void InsertingBulkRecords(Integer NoOfRecords){
+  for(integer pointer=1;pointer<=NoOfRecords;pointer++){
+    Contact con = new Contact();
+	 con.FirstName = 'Karthik'+Pointer;
+	 con.LastName = 'Bommineni';
+	 con.Phone = '95054283814';
+	 con.BirthDate = Date.Instance(1995,06,12);
+	 con.Fax = '4567891234';
+	 con.Department = 'Development';
+    insert con;
+	}
+	if(con.Id!=null){
+   system.debug("Contact is Created:" + con.Id);
+    }
+  }
+  
+  public static void InsertingBulkRecordsBulkfication(Integer NoOfRecords){
+  List<Contacts> lstCon = new List<Contacts>();
+  for(integer pointer=1;pointer<=NoOfRecords;pointer++){
+    Contact con = new Contact();
+	 con.FirstName = 'Karthik'+Pointer;
+	 con.LastName = 'Bommineni';
+	 con.Phone = '95054283814';
+	 con.BirthDate = Date.Instance(1995,06,12);
+	 con.Fax = '4567891234';
+	 con.Department = 'Development';
+    lstCon.add(con);
+	}
+	if(!lstCon.isEmpty()){
+	insert lstCon;
+   system.debug("Contact is Created:" + con.Id);
+    }
+  }
+  
+  public static void DeletingBulkRecords(String words){
+  if(words !=null &&words! =''){
+  words+='%';
+  List<Contact> lstCon = [select id,name from contact where FirstName like : words];
+  if(!lstCon.isEmpty()){
+  Delete lstCon;
+  }
+ }
+  public static void UpdatingRecord(){
+    Account acc= [select id,name,industry from account where name ='Karthik'];
+    if(acc!=null){
+    acc.rating='cold';
+    acc.Industry ='Manfacturing';
+    acc.site='Development';
+    update acc;
+ }
+ }
+//Deactivating the user by name :
+   public static void DeactivatingUser(String UserRecord){
+    User AccountToDeactivate = [select id,name,isActive from user where username:UserRecord  and isActive ='true'];
+    if(AccountToDeactivate!=null){
+      AccountToDeactivate.isActive='false';
+      update AccountToDeactivate;
+    }	  
+  }
+//Updating   all the contacts whose are not associated with accounts:
+    public static List<Contacts>  gettingRecords(){
+	return [select id ,lastname,firstname,accountid from cotnact where accountId = null];
+	}
+	public static void AssociatingContacts(String recordName){
+	List<contact> con = new List<Contact>();
+	if(recordName !=null && recordName!=''){
+	Account accrecord = [select id,name from account where name :recordName limit 1];
+	if(accrecord!=null){
+	for(contacts cnst :gettingRecords(){
+	cnst.accountId =accrecordId;
+	con.Add(cnst);
+	}
+	}
+	if(!con.isEmpty()){
+	update con;
+	}
+	}
+}   
